@@ -23,8 +23,6 @@ jobs:
       - name: Install dependencies and build
         run: |
           rustup update
-          cargo build --all-targets --all-features
-          cargo build --release --all-targets --all-features
 
       - name: Run script
         run: |
