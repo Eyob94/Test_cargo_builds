@@ -1,0 +1,40 @@
+name: Run script
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: actions/setup-rust@v1
+        with:
+          rust-toolchain: nightly
+
+      - name: Install dependencies and build
+        run: |
+          rustup update
+          cargo build --all-targets --all-features
+          cargo build --release --all-targets --all-features
+
+      - name: Run script
+        run: |
+          chmod +x ./install_and_test.sh
+          ./install_and_test.sh
+
+      - name: Upload results
+        uses: actions/upload-artifact@v3
+        with:
+          name: crate-build-results
+          path: crate_build_results.md
