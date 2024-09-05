@@ -18,9 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Rust
-        uses: actions/setup-rust@v1
-        with:
-          rust-toolchain: nightly
+        uses: moonrepo/setup-rust@v1
 
       - name: Install dependencies and build
         run: |
